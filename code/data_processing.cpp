@@ -24,24 +24,30 @@ DataProcessor::DataProcessor(string movies_id_name, string reviews_name) {
         }
     }
     num_movies_ = new_id+1;
-    // cout << "BBBBB" << endl;
+    my_id_to_title_ = vector<string>(num_movies_);
+    for (auto& m : movie_id_dict_) {
+        my_id_to_title_[m.second.second] = m.second.first;
+    }
+    cout << "BBBBB" << endl;
 
     adj_mat = vector<vector<int>>(new_id+1, vector<int>(new_id+1, 0));
-    num_weights = vector<vector<int>>(new_id+1, vector<int>(new_id+1, 0));
+    // num_weights = vector<vector<int>>(new_id+1, vector<int>(new_id+1, 0));
     // cout << "AAAA" << endl;
-
+    int cc = 0;
     ifstream reviews_file(reviews_name);
     if (reviews_file.is_open()) {
         vector<string> reviews_from_same_user;
         int current_user = -1;
         // for (int i = 0; i < 500; i++) {
         while (getline(reviews_file, line)) {
+            cout << cc << endl;
+            cc++;
             // getline(reviews_file, line);
             int first = line.find("::");
             int last = line.rfind("::");
             if (current_user != stoi(line.substr(0, first))) {
                 if (!reviews_from_same_user.empty()) {
-                    reviewsToMatrix(reviews_from_same_user);
+                    reviewsToList(reviews_from_same_user);
                 }
                 current_user = stoi(line.substr(0, first));
                 reviews_from_same_user.clear();
@@ -50,13 +56,16 @@ DataProcessor::DataProcessor(string movies_id_name, string reviews_name) {
             reviews_from_same_user.push_back(review);
         }
         if (!reviews_from_same_user.empty()) {
-            reviewsToMatrix(reviews_from_same_user);
+            reviewsToList(reviews_from_same_user);
         }
     }
 }
 
-void DataProcessor::reviewsToMatrix(vector<string> reviews) {
+void DataProcessor::reviewsToList(vector<string> reviews) {
     // vector<vector<int>> out;
+    if (reviews.size() <= 1) {
+        return;
+    }
     for (int i = 0; i < (int) reviews.size(); i++) {
         for (int j = i+1; j < (int) reviews.size(); j++) {
             string first = reviews[i];
@@ -69,15 +78,19 @@ void DataProcessor::reviewsToMatrix(vector<string> reviews) {
             int second_split_ind = second.find("::");
             int second_id = stoi(second.substr(0, second_split_ind));
             int second_score = stoi(second.substr(second_split_ind+2, string::npos));
-            // cout << "s_id: " << second_id << ", " << movie_id_dict_.at(second_id).second << ", " << second_score << endl;
-            // vector<int> r_weight = {first_id, second_id, abs(first_score-second_score)};
-            // out.push_back(r_weight);
-            adj_mat[movie_id_dict_.at(first_id).second][movie_id_dict_.at(second_id).second] += abs(first_score-second_score);
-            adj_mat[movie_id_dict_.at(second_id).second][movie_id_dict_.at(first_id).second] += abs(first_score-second_score);
-            num_weights[movie_id_dict_.at(first_id).second][movie_id_dict_.at(second_id).second] += 1;
-            num_weights[movie_id_dict_.at(second_id).second][movie_id_dict_.at(first_id).second] += 1;
-            // adj_mat[movie_id_dict_.at(first_id).second][movie_id_dict_.at(second_id).second].first += abs(first_score-second_score);
-            // adj_mat[movie_id_dict_.at(first_id).second][movie_id_dict_.at(second_id).second].second++;
+
+            adj_list[movie_id_dict_.at(first_id).second][movie_id_dict_.at(second_id).second] += abs(first_score-second_score);
+            adj_list[movie_id_dict_.at(second_id).second][movie_id_dict_.at(first_id).second] += abs(first_score-second_score);
+            // adj_mat[movie_id_dict_.at(first_id).second][movie_id_dict_.at(second_id).second] += abs(first_score-second_score);
+            // adj_mat[movie_id_dict_.at(second_id).second][movie_id_dict_.at(first_id).second] += abs(first_score-second_score);
+           
+            
+            num_weights_list[movie_id_dict_.at(first_id).second][movie_id_dict_.at(second_id).second] += 1;
+            num_weights_list[movie_id_dict_.at(second_id).second][movie_id_dict_.at(first_id).second] += 1;
+
+
+            // num_weights[movie_id_dict_.at(first_id).second][movie_id_dict_.at(second_id).second] += 1;
+            // num_weights[movie_id_dict_.at(second_id).second][movie_id_dict_.at(first_id).second] += 1;
         }
     }
 }

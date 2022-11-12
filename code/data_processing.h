@@ -19,15 +19,21 @@ class DataProcessor {
     map<int, pair<string, int>> movie_id_dict_;
 
     // adj_mat[i][j] is the sum of weights between movie i and movie j
-    vector<vector<int>> adj_mat;
+    // vector<vector<int>> adj_mat;
+    // adj_list[target][dest] gives us the weight between target and dest
+    map<int, map<int, int>> adj_list;
+
 
     // num_weights[i][j] is the total number of weights between i and j. Note adj_mat[i][j]/num_weights[i][j] = avgweight[i][j]
-    vector<vector<int>> num_weights;
+    // vector<vector<int>> num_weights;
+    map<int, map<int, int>> num_weights_list;
 
     // number of unique movies
     int num_movies_;
+
+    vector<string> my_id_to_title_;
     
     private:
     // void saveVec(vector<vector<int>> inp, ofstream& target_file);
-    void reviewsToMatrix(vector<string> reviews);
+    void reviewsToList(vector<string> reviews);
 };
