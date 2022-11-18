@@ -15,9 +15,17 @@ class DataProcessor {
     // writes an adjacency list to the specified file
     void listToFile(string filename, map<int, map<int, int>> list);
 
-    // builds an adjacency list from thte specified file
+    // builds an adjacency list from the specified file
     void fileToList(string filename, map<int, map<int, int>>& list);
 
+    // returns a vector containing the ids of the neighbors of target 
+    vector<pair<int, int>> getNeighbors(int target);
+
+    // returns the index in the adjacency list of the movie title
+    int titleToID(string title);
+
+    // returns a movie title given an adjacency list ID
+    string IDToTitle(int id);
 
     // attempt to preprocess weights. i realised after running that it was probably slower to save
     // and load the preprocessed data than to just do it every time.
@@ -25,15 +33,17 @@ class DataProcessor {
     // vector<vector<int>> reviewsToWeight(vector<string> reviews);
     // void preprocessData(string reviews_name, string target_file);
 
-    // maps a movie id to a pair. first is title, second is position in adjacency matrix.
+    // adj_list[target][dest] is the average difference in reviews between target and dest 
+    map<int, map<int, int>> avg_adj_list;
+
+
+    // maps movie id to a pair. first is title, second is position in adjacency matrix.
     map<int, pair<string, int>> movie_id_dict_;
 
-    // adj_list[target][dest] gives us the weight between target and dest
+    // adj_list[target][dest] gives us the sum of the differences in ratings between target and dest
     map<int, map<int, int>> adj_list;
 
-
-    // Note adj_list[i][j]/num_weights[i][j] = avgweight[i][j]
-    // num_weights_list[target][dest] gives the total number of weights between target and test
+    // num_weights_list[target][dest] gives the total number of ratings between target and test
     map<int, map<int, int>> num_weights_list;
 
     // number of unique movies
