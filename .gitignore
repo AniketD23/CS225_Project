@@ -3,3 +3,6 @@ build/main
 code/main.cpp
 build/main
 code/main.cpp
+.devcontainer
+build/main
+code/main.cpp
