@@ -21,7 +21,7 @@ class DataProcessor {
   void fileToList(string filename, map<int, map<int, int>>& list);
 
   // returns a vector containing the ids of the neighbors of target
-  vector<pair<int, int>> getNeighbors(int target);
+  vector<int> getNeighbors(int target);
 
   // returns the index in the adjacency list of the movie title
   int titleToID(string title);
