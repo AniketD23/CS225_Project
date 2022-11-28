@@ -127,6 +127,11 @@ void DataProcessor::reviewsToList(vector<string> reviews) {
   }
 }
 
+// returns a vector containing the ids of the neighbors of target
+// vector<pair<int, int>> DataProcessor::getNeighbors(int target) {
+  
+// }
+
 // returns the index in the adjacency list of the movie title
 int DataProcessor::titleToID(string title) {
   int id = 0;
@@ -145,18 +150,22 @@ string DataProcessor::IDToTitle(int id) {
   return movie.first;
 }
 
+// int weight for adj_list and num_weights_list
 void DataProcessor::listToFile(string filename, map<int, map<int, int>> list) {
   ofstream os(filename);
-  int map_num = 1;
-  cout << "Maps written: " << endl;
+  int node_num = 0;
+  cout << "Nodes written: " << endl;
 
   for (auto& node : list) {
     // first line of each outer key formatted as "outer_key:{"
     os << node.first << ':' << '{' << '\n';
 
+    // checks if each neighbor has a valid edge and writes to inner map
     // each line of inner map formatted as "inner_key:inner_value"
     for (auto& neighbor : node.second) {
-      os << neighbor.first << ':' << neighbor.second << "\n";
+      if (isValidEdge(node.first, neighbor.first)) {
+        os << neighbor.first << ':' << neighbor.second << "\n";
+      }
     }
 
     // end of inner map
@@ -164,17 +173,52 @@ void DataProcessor::listToFile(string filename, map<int, map<int, int>> list) {
 
     // print count at the end of each map write
     stringstream print;
-    print << map_num;
+    node_num++;
+    print << node_num;
     cout << "\r" << print.str();
-    map_num++;
   }
   os.close();
 }
 
-void fileToList(string filename, map<int, map<int, int>>& list) {
+// double weight for avg_adj_list_
+void DataProcessor::listToFile(string filename, map<int, map<int, double>> list) {
+  ofstream os(filename);
+  int node_num = 0;
+  cout << "Nodes written: " << endl;
+
+  for (auto& node : list) {
+    // first line of each outer key formatted as "outer_key:{"
+    os << node.first << ':' << '{' << '\n';
+
+    // checks if each neighbor has a valid edge and writes to inner map
+    // each line of inner map formatted as "inner_key:inner_value"
+    for (auto& neighbor : node.second) {
+      if (isValidEdge(node.first, neighbor.first)) {
+        os << neighbor.first << ':' << neighbor.second << "\n";
+      }
+    }
+
+    // end of inner map
+    os << "}\n";
+
+    // print count at the end of each map write
+    stringstream print;
+    node_num++;
+    print << node_num;
+    cout << "\r" << print.str();
+  }
+  os.close();
+}
+
+bool DataProcessor::isValidEdge(int node1, int node2) {
+  return num_weights_list[node1][node2] > 2;
+}
+
+// int weight for adj_list and num_weights_list
+void DataProcessor::fileToList(string filename, map<int, map<int, int>>& list) {
   ifstream ifs(filename);
-  int map_num = 1;
-  cout << "Maps read: " << endl;
+  int node_num = 1;
+  cout << "Nodes read: " << endl;
   string line;
   if (ifs.is_open()) {
     while (getline(ifs, line)) {
@@ -185,7 +229,7 @@ void fileToList(string filename, map<int, map<int, int>>& list) {
         list[outer_key] = map<int, int>();
 
         while (getline(ifs, line)) {
-          // extrct ech key-vlue pir of the inner mp
+          // extract each key-value pair of the inner map
           if (line.find('}') != string::npos) {
             break;
           }
@@ -196,12 +240,75 @@ void fileToList(string filename, map<int, map<int, int>>& list) {
           // insert key and value into the inner map
           list[outer_key][inner_key] = value;
         }
-        // print count at the end of each map write
+        // print count at the end of each node read
         stringstream print;
-        print << map_num;
+        node_num++;
+        print << node_num;
         cout << "\r" << print.str();
-        map_num++;
       }
     }
+  }
+}
+
+// double weight for avg_adj_list_
+void DataProcessor::fileToList(string filename, map<int, map<int, double>>& list) {
+  ifstream ifs(filename);
+  int node_num = 1;
+  cout << "Nodes read: " << endl;
+  string line;
+  if (ifs.is_open()) {
+    while (getline(ifs, line)) {
+      if (line.find('{') != string::npos) {
+        // extract outer key and add to the outer map with an empty inner map
+        size_t o_key_end = line.find(':');
+        int outer_key = stoi(line.substr(0, o_key_end));
+        list[outer_key] = map<int, double>();
+
+        while (getline(ifs, line)) {
+          // extract each key-value pair of the inner map
+          if (line.find('}') != string::npos) {
+            break;
+          }
+          size_t demarc = line.find(':');
+          int inner_key = stoi(line.substr(0, demarc));
+          int value = stod(line.substr(demarc + 1));
+
+          // insert key and value into the inner map
+          list[outer_key][inner_key] = value;
+        }
+        // print count at the end of each node read
+        stringstream print;
+        node_num++;
+        print << node_num;
+        cout << "\r" << print.str();
+      }
+    }
+  }
+}
+
+void DataProcessor::populateAvgAdj() {
+  vector<int> processed;
+  int node_num = 0;
+  cout << "Nodes processed: " << endl;
+  for (unsigned i = 0; i < adj_list.size(); i++) {
+    avg_adj_list_[i] = std::map<int, double>();
+
+    // divide total difference by reviews per edge
+    for (auto& kv : adj_list[i]) {
+      int j = kv.first;
+      if (find(processed.begin(), processed.end(), j) != processed.end()) {
+        double weight = 1.0 * adj_list[i][j] / num_weights_list[i][j];
+        avg_adj_list_[i][j] = weight;
+        avg_adj_list_[j][i] = weight;
+      }
+    }
+    processed.push_back(i);
+
+    // print count at the end of each node write
+    stringstream print;
+    node_num++;
+    print << node_num;
+    cout << "\r" << print.str();
+
   }
 }
