@@ -10,8 +10,8 @@
 
 using namespace std;
 
-DataProcessor::DataProcessor(string movies_id_name) {
-  ifstream movie_id_file(movies_id_name);
+DataProcessor::DataProcessor() {
+  ifstream movie_id_file("../data/movies.dat");
   string line;
   int new_id = 0;
   if (movie_id_file.is_open()) {
@@ -29,6 +29,14 @@ DataProcessor::DataProcessor(string movies_id_name) {
   for (auto& m : movie_id_dict_) {
     my_id_to_title_[m.second.second] = m.second.first;
   }
+
+  cout << "Loading adjacency list" << endl;
+  fileToListDouble("../lists/avg_adj_list_.txt", avg_adj_list_);
+
+}
+
+map<int, double> DataProcessor::getNeighbors(int target) {
+  return avg_adj_list_[target];
 }
 
 DataProcessor::DataProcessor(string movies_id_name, string reviews_name) {
@@ -187,6 +195,10 @@ void DataProcessor::listToFile(string filename, map<int, map<int, double>> list)
   cout << "Nodes written: " << endl;
 
   for (auto& node : list) {
+    if (node.second.empty()) {
+      continue;
+    }
+
     // first line of each outer key formatted as "outer_key:{"
     os << node.first << ':' << '{' << '\n';
 
@@ -251,7 +263,7 @@ void DataProcessor::fileToList(string filename, map<int, map<int, int>>& list) {
 }
 
 // double weight for avg_adj_list_
-void DataProcessor::fileToList(string filename, map<int, map<int, double>>& list) {
+void DataProcessor::fileToListDouble(string filename, map<int, map<int, double>>& list) {
   ifstream ifs(filename);
   int node_num = 1;
   cout << "Nodes read: " << endl;
@@ -271,7 +283,7 @@ void DataProcessor::fileToList(string filename, map<int, map<int, double>>& list
           }
           size_t demarc = line.find(':');
           int inner_key = stoi(line.substr(0, demarc));
-          int value = stod(line.substr(demarc + 1));
+          double value = stod(line.substr(demarc + 1));
 
           // insert key and value into the inner map
           list[outer_key][inner_key] = value;

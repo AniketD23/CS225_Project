@@ -5,3 +5,4 @@ code/main.cpp
 .devcontainer
 build/main
 code/main.cpp
+lists/avg_adj_list_.txt

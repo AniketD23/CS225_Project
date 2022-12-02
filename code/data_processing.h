@@ -7,9 +7,7 @@ using namespace std;
 class DataProcessor {
  public:
   // default constructor
-  DataProcessor() = default;
-  // pass file location of movies.dat
-  DataProcessor(string movies_id_name);
+  DataProcessor();
 
   // pass file location of movies.dat and ratings.dat
   DataProcessor(string movies_id_name, string reviews_name);
@@ -24,12 +22,12 @@ class DataProcessor {
   void listToFile(string filename, map<int, map<int, double>> list);
 
   // builds an adjacency list from the specified file
-  void fileToList(string filename, map<int, map<int, double>>& list);
+  void fileToListDouble(string filename, map<int, map<int, double>>& list);
 
 
 
   // returns a vector containing the ids of the neighbors of target
-  vector<int> getNeighbors(int target);
+  map<int, double> getNeighbors(int target);
 
   // returns the index in the adjacency list of the movie title
   int titleToID(string title);
