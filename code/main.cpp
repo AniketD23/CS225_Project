@@ -6,7 +6,7 @@
 
 
 int main() {
-  DataProcessor d;
+  DataProcessor d("../data/movies.dat", "../lists/avg_adj_list_.txt");
 
   std::map<int, double> neighborhood = d.getNeighbors(56);
   std::cout << '\n';

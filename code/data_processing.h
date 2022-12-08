@@ -6,11 +6,11 @@
 using namespace std;
 class DataProcessor {
  public:
-  // default constructor
-  DataProcessor();
+  // default constructor. pass id_list_filename = "test" to use a test set of ids
+  DataProcessor(string id_list_filename, string adj_list_filename);
 
-  // pass file location of movies.dat and ratings.dat
-  DataProcessor(string movies_id_name, string reviews_name);
+  // loads entire dataset from movies.dat and reviews.dat
+  DataProcessor();
 
   // writes an adjacency list to the specified file
   void listToFile(string filename, map<int, map<int, int>> list);
@@ -76,4 +76,5 @@ class DataProcessor {
   // returns true if the edge meets our criteria for to be written
   bool isValidEdge(int node1, int node2);
 
+  bool testing_;
 };

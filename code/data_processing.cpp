@@ -10,28 +10,31 @@
 
 using namespace std;
 
-DataProcessor::DataProcessor() {
-  ifstream movie_id_file("../data/movies.dat");
-  string line;
-  int new_id = 0;
-  if (movie_id_file.is_open()) {
-    while (getline(movie_id_file, line)) {
-      int first = line.find("::");
-      int last = line.rfind("::");
-      int movie_id = stoi(line.substr(0, first));
-      string title = line.substr(first + 2, last - first - 2);
-      movie_id_dict_[movie_id] = make_pair(title, new_id);
-      new_id++;
+DataProcessor::DataProcessor(string id_list_filename, string adj_list_filename) {
+  testing_ = id_list_filename == "test";
+  if (!testing_) {
+    ifstream movie_id_file(id_list_filename);
+    string line;
+    int new_id = 0;
+    if (movie_id_file.is_open()) {
+      while (getline(movie_id_file, line)) {
+        int first = line.find("::");
+        int last = line.rfind("::");
+        int movie_id = stoi(line.substr(0, first));
+        string title = line.substr(first + 2, last - first - 2);
+        movie_id_dict_[movie_id] = make_pair(title, new_id);
+        new_id++;
+      }
     }
-  }
-  num_movies_ = new_id + 1;
-  my_id_to_title_ = vector<string>(num_movies_);
-  for (auto& m : movie_id_dict_) {
-    my_id_to_title_[m.second.second] = m.second.first;
+    num_movies_ = new_id + 1;
+    my_id_to_title_ = vector<string>(num_movies_);
+    for (auto& m : movie_id_dict_) {
+      my_id_to_title_[m.second.second] = m.second.first;
+    }
   }
 
   cout << "Loading adjacency list" << endl;
-  fileToListDouble("../lists/avg_adj_list_.txt", avg_adj_list_);
+  fileToListDouble(adj_list_filename, avg_adj_list_);
 
 }
 
@@ -39,7 +42,10 @@ map<int, double> DataProcessor::getNeighbors(int target) {
   return avg_adj_list_[target];
 }
 
-DataProcessor::DataProcessor(string movies_id_name, string reviews_name) {
+DataProcessor::DataProcessor() {
+  string movies_id_name = "../data/movies.dat";
+  string reviews_name = "../data/ratings.dat";
+  
   ifstream movie_id_file(movies_id_name);
   string line;
   int new_id = 0;
@@ -58,7 +64,6 @@ DataProcessor::DataProcessor(string movies_id_name, string reviews_name) {
   for (auto& m : movie_id_dict_) {
     my_id_to_title_[m.second.second] = m.second.first;
   }
-  cout << "BBBBB" << endl;
 
   int cc = 0;
   ifstream reviews_file(reviews_name);
@@ -142,6 +147,9 @@ void DataProcessor::reviewsToList(vector<string> reviews) {
 
 // returns the index in the adjacency list of the movie title
 int DataProcessor::titleToID(string title) {
+  if (testing_) {
+    return stoi(title);
+  }
   int id = 0;
   for (auto& it : movie_id_dict_) {
     if (it.second.first == title) {
@@ -154,6 +162,9 @@ int DataProcessor::titleToID(string title) {
 
 // returns a movie title given an adjacency list ID
 string DataProcessor::IDToTitle(int id) {
+  if (testing_) {
+    return to_string(id);
+  }
   pair<string, int> movie = movie_id_dict_[id];
   return movie.first;
 }
