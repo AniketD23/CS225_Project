@@ -9,6 +9,9 @@
 #include <sstream>
 
 using namespace std;
+DataProcessor::DataProcessor() {
+  testing_ = true;
+}
 
 DataProcessor::DataProcessor(string id_list_filename, string adj_list_filename) {
   testing_ = id_list_filename == "test";
@@ -42,10 +45,8 @@ map<int, double> DataProcessor::getNeighbors(int target) {
   return avg_adj_list_[target];
 }
 
-DataProcessor::DataProcessor() {
-  string movies_id_name = "../data/movies.dat";
-  string reviews_name = "../data/ratings.dat";
-  
+void DataProcessor::loadReviewsToAdjList(string movies_id_name, string reviews_name) {
+
   ifstream movie_id_file(movies_id_name);
   string line;
   int new_id = 0;

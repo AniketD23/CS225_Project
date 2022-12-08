@@ -9,8 +9,11 @@ class DataProcessor {
   // default constructor. pass id_list_filename = "test" to use a test set of ids
   DataProcessor(string id_list_filename, string adj_list_filename);
 
-  // loads entire dataset from movies.dat and reviews.dat
+  // blank dataset for testing
   DataProcessor();
+
+  // loads entire dataset from given filenames
+  void loadReviewsToAdjList(string movies_id_name, string reviews_name);
 
   // writes an adjacency list to the specified file
   void listToFile(string filename, map<int, map<int, int>> list);
