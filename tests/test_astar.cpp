@@ -143,9 +143,10 @@ TEST_CASE("a_star test 1", "[a_star]") {
 // TEST_CASE("a_star time complexity test", "[a_star]") {
 //     DataProcessor data("../data/movies.dat", "../lists/avg_adj_list_.txt");
     
-//     std::vector<std::string> out = A_Star::shortestPath("Ice Age: Collision Course (2016)", "What We Do in the Shadows (2014)", data);
+//     std::vector<std::pair<std::string, double>> out = A_Star::shortestPath("Ice Age: Collision Course", "What We Do in the Shadows", data);
+//     std::cout << out.size() << "\n";
 //     for (auto i : out) {
-//         std::cout << i << ", ";
+//         std::cout << i.first << "\t\t" << i.second << "\n";
 //     }
 //     std::cout << "\n";
 //     // ans = {"1", "6", "3"};

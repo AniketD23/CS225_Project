@@ -10,18 +10,12 @@ class DataProcessor {
  public:
   // default constructor. pass id_list_filename = "test" to use a test set of ids
   DataProcessor(string id_list_filename, string adj_list_filename);
-
+  
   // blank dataset for testing
   DataProcessor();
 
   // loads entire dataset from given filenames
   void loadReviewsToAdjList(string movies_id_name, string reviews_name);
-
-  // writes an adjacency list to the specified file
-  void listToFile(string filename, unordered_map<int, unordered_map<int, int>> list);
-
-  // builds an adjacency list from the specified file
-  void fileToList(string filename, unordered_map<int, unordered_map<int, int>>& list);
 
   // writes an adjacency list to the specified file
   void listToFile(string filename, unordered_map<int, unordered_map<int, double>>& list);
@@ -73,4 +67,6 @@ class DataProcessor {
   bool isValidEdge(int node1, int node2);
 
   bool testing_;
+
+  bool loadIdListFromFile(string filename);
 };
