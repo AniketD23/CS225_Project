@@ -1,4 +1,3 @@
 build/
 data/
-lists/adj_list.txt
-lists/num_weights_list.txt
+lists/

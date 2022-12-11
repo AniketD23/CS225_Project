@@ -7,6 +7,7 @@
 #include <iterator>
 #include <ostream>
 #include <sstream>
+#include <unordered_map>
 
 using namespace std;
 DataProcessor::DataProcessor() {
@@ -41,7 +42,7 @@ DataProcessor::DataProcessor(string id_list_filename, string adj_list_filename) 
 
 }
 
-map<int, double> DataProcessor::getNeighbors(int target) {
+unordered_map<int, double> DataProcessor::getNeighbors(int target) {
   return avg_adj_list_[target];
 }
 
@@ -166,12 +167,11 @@ string DataProcessor::IDToTitle(int id) {
   if (testing_) {
     return to_string(id);
   }
-  pair<string, int> movie = movie_id_dict_[id];
-  return movie.first;
+  return my_id_to_title_[id];
 }
 
 // int weight for adj_list and num_weights_list
-void DataProcessor::listToFile(string filename, map<int, map<int, int>> list) {
+void DataProcessor::listToFile(string filename, unordered_map<int, unordered_map<int, int>> list) {
   ofstream os(filename);
   int node_num = 0;
   cout << "Nodes written: " << endl;
@@ -201,7 +201,7 @@ void DataProcessor::listToFile(string filename, map<int, map<int, int>> list) {
 }
 
 // double weight for avg_adj_list_
-void DataProcessor::listToFile(string filename, map<int, map<int, double>>& list) {
+void DataProcessor::listToFile(string filename, unordered_map<int, unordered_map<int, double>>& list) {
   ofstream os(filename);
   int node_num = 0;
   cout << "Nodes written: " << endl;
@@ -239,7 +239,7 @@ bool DataProcessor::isValidEdge(int node1, int node2) {
 }
 
 // int weight for adj_list and num_weights_list
-void DataProcessor::fileToList(string filename, map<int, map<int, int>>& list) {
+void DataProcessor::fileToList(string filename, unordered_map<int, unordered_map<int, int>>& list) {
   ifstream ifs(filename);
   int node_num = 1;
   cout << "Nodes read: " << endl;
@@ -250,7 +250,7 @@ void DataProcessor::fileToList(string filename, map<int, map<int, int>>& list) {
         // extract outer key and add to the outer map with an empty inner map
         size_t o_key_end = line.find(':');
         int outer_key = stoi(line.substr(0, o_key_end));
-        list[outer_key] = map<int, int>();
+        list[outer_key] = unordered_map<int, int>();
 
         while (getline(ifs, line)) {
           // extract each key-value pair of the inner map
@@ -275,7 +275,7 @@ void DataProcessor::fileToList(string filename, map<int, map<int, int>>& list) {
 }
 
 // double weight for avg_adj_list_
-void DataProcessor::fileToListDouble(string filename, map<int, map<int, double>>& list) {
+void DataProcessor::fileToListDouble(string filename, unordered_map<int, unordered_map<int, double>>& list) {
   ifstream ifs(filename);
   int node_num = 1;
   cout << "Nodes read: " << endl;
@@ -286,7 +286,7 @@ void DataProcessor::fileToListDouble(string filename, map<int, map<int, double>>
         // extract outer key and add to the outer map with an empty inner map
         size_t o_key_end = line.find(':');
         int outer_key = stoi(line.substr(0, o_key_end));
-        list[outer_key] = map<int, double>();
+        list[outer_key] = unordered_map<int, double>();
 
         while (getline(ifs, line)) {
           // extract each key-value pair of the inner map
@@ -315,7 +315,7 @@ void DataProcessor::populateAvgAdj() {
   int node_num = 0;
   cout << "Nodes processed: " << endl;
   for (unsigned i = 0; i < adj_list.size(); i++) {
-    avg_adj_list_[i] = std::map<int, double>();
+    avg_adj_list_[i] = std::unordered_map<int, double>();
 
     // divide total difference by reviews per edge
     for (auto& kv : adj_list[i]) {
