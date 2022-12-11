@@ -18,16 +18,16 @@ void verify_path(std::vector<std::pair<std::string, double>> a, std::vector<std:
 TEST_CASE("a_star basic", "[a_star]") {
     DataProcessor data;
     create_edge(0, 2, .9, data);
-    create_edge(2, 4, .9, data);
+    create_edge(2, 4, 1.2, data);
     create_edge(4, 6, .9, data);
-    create_edge(6, 8, .9, data);
+    create_edge(6, 8, .8, data);
     create_edge(8, 10, .9, data);
 
 
     create_edge(0, 1, .1, data);
     create_edge(1, 3, 1.0, data);
-    create_edge(3, 5, 1.0, data);
-    create_edge(5, 7, 1.0, data);
+    create_edge(3, 5, 1.2, data);
+    create_edge(5, 7, .8, data);
     create_edge(7, 10, 1.0, data);
 
     std::vector<std::pair<std::string, double>> out = A_Star::shortestPath("0", "10", data);
@@ -70,9 +70,15 @@ TEST_CASE("a_star cant find", "[a_star]") {
     create_edge(1, 4, 6.0, data);
     create_edge(2, 4, 4.5, data);
 
+    create_edge(5, 7, 1.3, data);
+    create_edge(4, 8, 1.3, data);
+    create_edge(7, 10, 1.3, data);
+
     std::vector<std::pair<std::string, double>> out = A_Star::shortestPath("0", "5", data);
-    std::vector<std::string> ans = {};
-    verify_path(out, ans);
+    REQUIRE (out.empty());
+    out = A_Star::shortestPath("10", "5", data);
+    REQUIRE (!out.empty());
+
 }
 
 TEST_CASE("a_star edge cases", "[a_star]") {
@@ -140,15 +146,28 @@ TEST_CASE("a_star test 1", "[a_star]") {
 }
 
 // does the algorithm run on the full dataset in reasonable time?
-// TEST_CASE("a_star time complexity test", "[a_star]") {
-//     DataProcessor data("../data/movies.dat", "../lists/avg_adj_list_.txt");
+TEST_CASE("a_star time complexity test", "[a_star]") {
+    DataProcessor data("../data/movies.dat", "../lists/avg_adj_list_.txt");
     
-//     std::vector<std::string> out = A_Star::shortestPath("Ice Age: Collision Course (2016)", "What We Do in the Shadows (2014)", data);
-//     for (auto i : out) {
-//         std::cout << i << ", ";
-//     }
-//     std::cout << "\n";
-//     // ans = {"1", "6", "3"};
-// }
+    std::vector<std::pair<std::string, double>> out = A_Star::shortestPath("Ice Age: Collision Course", "What We Do in the Shadows", data);
+    // std::cout << out.size() << "\n";
+    // for (auto i : out) {
+    //     std::cout << i.first << "\t\t" << i.second << "\n";
+    // }
+    // std::cout << "\n";
+    std::vector<std::string> ans = {"Ice Age: Collision Course", "For Your Eyes Only", "Unfaithful", "What We Do in the Shadows"};
+    verify_path(out, ans);
+
+
+    out = A_Star::shortestPath("The Avengers", "The Room", data);
+    ans = {"The Avengers", "Thor: The Dark World", "Operation Brothers", "The Room"};
+    verify_path(out, ans);
+    // std::cout << out.size() << "\n";
+    // for (auto i : out) {
+    //     std::cout << i.first << "\t\t" << i.second << "\n";
+    // }
+    // std::cout << "\n";
+
+}
 
 
