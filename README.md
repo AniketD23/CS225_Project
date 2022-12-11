@@ -13,7 +13,8 @@ The dataset we used is in the data folder. The files that we use to load in the 
 ## Running Instructions
 You should provide full instructions on how to build and run your executable, including how to define the input data and output location for each method. You should also have instructions on how to build and run your test suite, including a general description on what tests you have created. It is in your best interest to make the instructions (and the running of your executables and tests) as simple and straightforward as possible.
 
-Type make to compile all of the code.
+First, download the avg_adj_list, and place it in the lists directory. Enter to the terminal, "mkdir build", "cd build", then "cmake .." to create the build folder.
+Then, type make to compile all of the code.
 
 Type the following commands depending on the algorithm that is desired. Proper capitalization and punctuation is required. The output will be printed to the terminal.
 
@@ -27,6 +28,8 @@ Type ./test to run the tests
 
 
 **A\* testing:**
+
+I ran tests on manually constructed datasets, to check against manually calculated solutions. These datasets covered general, small scale cases. I also created datasets that verified whether my heuristic affected path selection. As our heuristic is not admissible, we will have non optimal paths under certain circumstances, and I tested to ensure we would be on those non optimal paths when we expect. Finally, one test case runs against the full dataset, which verifies a certain level of time complexity. I also checked edge cases like if the algorithm can't find any path.
 
 **BFS testing:**
 
