@@ -4,6 +4,8 @@
 #include "a_star.h"
 
 TEST_CASE("avd_adj_list test1", "[adj1]") {
-  DataProcessor d;
-  REQUIRE(d.avg_adj_list_[56][134] == (5 / 3));
+  DataProcessor d("../data/movies.dat", "../lists/avg_adj_list_.txt");
+  std::cout << "\nFinished processing nodes\n" << std::endl;
+
+  REQUIRE(d.avg_adj_list_[56][134] == 1.0 * 5 / 3);
 }

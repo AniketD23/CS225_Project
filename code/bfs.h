@@ -6,13 +6,13 @@
 class BFS {
   public:
     BFS(DataProcessor& data);
-    void breadthFirst(std::string film);
+    void breadthFirst(std::string film1, std::string film2);
     std::vector<std::string> traversal();
   
   private:
     DataProcessor dp;
     std::vector<std::string> BFT;   
 
-    void breadthFirst(int node);
+    void breadthFirst(int node1, int node2);
 
 };
