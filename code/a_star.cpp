@@ -64,13 +64,13 @@ vector<pair<string, double>> A_Star::shortestPath(std::string start, std::string
   return std::vector<pair<string, double>>();
 }
 
-int A_Star::heuristic(int start_id, int end_id, DataProcessor& data) {
+double A_Star::heuristic(int start_id, int end_id, DataProcessor& data) {
   // return 0;
   if (start_id == end_id) {
-    return 0;
+    return .1;
   }
   if (data.avg_adj_list_[start_id].count(end_id) == 0) {
-    return 10;
+    return 10.1;
   }
   return data.avg_adj_list_[start_id][end_id];
 }
@@ -82,6 +82,7 @@ vector<pair<string, double>> A_Star::backtrack(int start, int end,
   int curr = end;
   while (curr != start) {
     out.insert(out.begin(), std::make_pair(data.IDToTitle(curr), g_score[curr]));
+    // std::cout << data.IDToTitle(curr) << ", " << data.avg_adj_list_[curr][came_from[curr]] << ", " << data.IDToTitle(came_from[curr]) << "\n";
     curr = came_from[curr];
   }
   out.insert(out.begin(), std::make_pair(data.IDToTitle(curr), 0));
