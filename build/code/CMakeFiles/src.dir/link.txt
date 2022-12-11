@@ -1,2 +1,0 @@
-/usr/bin/ar qc libsrc.a CMakeFiles/src.dir/a_star.cpp.o CMakeFiles/src.dir/data_processing.cpp.o CMakeFiles/src.dir/prim.cpp.o
-/usr/bin/ranlib libsrc.a
