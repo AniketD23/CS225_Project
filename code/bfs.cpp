@@ -1,5 +1,6 @@
 #include "bfs.h"
 #include <iostream>
+#include <unordered_set>
 
 BFS::BFS(DataProcessor& data) { dp = data; }
 
@@ -11,11 +12,10 @@ void BFS::breadthFirst(std::string film1, std::string film2) {
 void BFS::breadthFirst(int node1, int node2) {
   std::unordered_map<int, std::unordered_map<int, double>>& adjacency = dp.avg_adj_list_;
 
-  std::vector<bool> visited;
-  visited.resize(adjacency.size(), false);
+  std::unordered_set<int> visited;
 
   std::queue<int> q;
-  visited[node1] = true;
+  visited.insert(node1);
   q.push(node1);
 
   while (!q.empty()) {
@@ -28,8 +28,8 @@ void BFS::breadthFirst(int node1, int node2) {
 
     for (auto neighbor : dp.getNeighbors(node1)) {
       // std::cout << "home: " << node1 << ", neighbor: " << neighbor.first << std::endl;
-      if (!visited[neighbor.first]) {
-        visited[neighbor.first] = true; 
+      if (visited.find(neighbor.first) == visited.end()) {
+        visited.insert(neighbor.first);
         q.push(neighbor.first);
       }
     }
