@@ -3,17 +3,32 @@
 #include <sstream>
 
 #include "data_processing.h"
+#include "bfs.h"
 
 
 int main() {
-  DataProcessor d("../data/movies.dat", "../lists/avg_adj_list_.txt");
 
-  std::map<int, double> neighborhood = d.getNeighbors(56);
-  std::cout << '\n';
+  DataProcessor proc;
+  proc.fileToListDouble("../lists/bfs_test.txt", proc.avg_adj_list_);
+  BFS bfs(proc);
 
-  for (auto& e : neighborhood) {
-    std::cout << e.first << " : " << e.second << std::endl;
+  bfs.breadthFirst("0");
+
+  std::cout << "\nBFS:" << std::endl;
+
+  for (std::string e : bfs.traversal()) {
+    std::cout << e << std::endl;
   }
+
+
+  // DataProcessor d("../data/movies.dat", "../lists/avg_adj_list_.txt");
+
+  // std::map<int, double> neighborhood = d.getNeighbors(56);
+  // std::cout << '\n';
+
+  // for (auto& e : neighborhood) {
+  //   std::cout << e.first << " : " << e.second << std::endl;
+  // }
 
 
   // std::cout << "Start reading adj_list" << std::endl;
@@ -33,7 +48,7 @@ int main() {
   // d.populateAvgAdj();
   // std::cout << "\nFinish populating avg_adj_list_\n" << std::endl;
 
-  std::cout << "avg_adj_list_[56][134] (should be 1.66667): " << d.avg_adj_list_[56][134] << '\n' << std::endl;
+  // std::cout << "avg_adj_list_[56][134] (should be 1.66667): " << d.avg_adj_list_[56][134] << '\n' << std::endl;
 
   // std::cout << "Start writing avg_adj_list_" << std::endl;
   // d.listToFile("../lists/avg_adj_list_.txt", d.avg_adj_list_);
