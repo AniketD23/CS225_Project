@@ -1,9 +1,9 @@
-#include "prim.h"
+/* #include "prim.h"
 
 #include <climits>
 
 Prim::Prim(string start, DataProcessor& data) : dp_(data) {
-  start_ = start; 
+  start_ = start;
   // convert title
   int id = dp_.titleToID(start);
   // make starting element the root
@@ -23,3 +23,4 @@ int Prim::nextMin(int vertex) {
 }
 
 map<int, bool> Prim::MST(string start) {}
+ */
