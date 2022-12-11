@@ -13,3 +13,4 @@ The tests used the same small example graph to perform a BFS on from different s
 # The answer to your leading question
 You should direct address your proposed leading question. How did you answer this question? What did you discover? If your project was ultimately unsuccessful, give a brief reflection about what worked and what you would do differently as a team.
 
+Our leading question was to create a graph that will aim to determine the similarity of different movies by connecting movies that have been reviewed similarly by different users. We answered this question by taking the average difference in rating by the same user between each movie in our graph. This allowed us to see how movies were rated differently by people with similar tastes. We saw that the output of our algorithms did not really follow along strict genre lines, which could be useful for providing recommendations that people may be originally unaware of.
