@@ -140,16 +140,28 @@ TEST_CASE("a_star test 1", "[a_star]") {
 }
 
 // does the algorithm run on the full dataset in reasonable time?
-// TEST_CASE("a_star time complexity test", "[a_star]") {
-//     DataProcessor data("../data/movies.dat", "../lists/avg_adj_list_.txt");
+TEST_CASE("a_star time complexity test", "[a_star]") {
+    DataProcessor data("../data/movies.dat", "../lists/avg_adj_list_.txt");
     
-//     std::vector<std::pair<std::string, double>> out = A_Star::shortestPath("Ice Age: Collision Course", "What We Do in the Shadows", data);
-//     std::cout << out.size() << "\n";
-//     for (auto i : out) {
-//         std::cout << i.first << "\t\t" << i.second << "\n";
-//     }
-//     std::cout << "\n";
-//     // ans = {"1", "6", "3"};
-// }
+    std::vector<std::pair<std::string, double>> out = A_Star::shortestPath("Ice Age: Collision Course", "What We Do in the Shadows", data);
+    // std::cout << out.size() << "\n";
+    // for (auto i : out) {
+    //     std::cout << i.first << "\t\t" << i.second << "\n";
+    // }
+    // std::cout << "\n";
+    std::vector<std::string> ans = {"Ice Age: Collision Course", "For Your Eyes Only", "Unfaithful", "What We Do in the Shadows"};
+    verify_path(out, ans);
+
+
+    out = A_Star::shortestPath("The Avengers", "The Room", data);
+    ans = {"The Avengers", "Thor: The Dark World", "Operation Brothers", "The Room"};
+    verify_path(out, ans);
+    // std::cout << out.size() << "\n";
+    // for (auto i : out) {
+    //     std::cout << i.first << "\t\t" << i.second << "\n";
+    // }
+    // std::cout << "\n";
+
+}
 
 
