@@ -1,33 +1,65 @@
 #include "user_input.h"
+#include <cstring>
+#include <fstream>
+#include <iostream>
+#include <iterator>
+#include <ostream>
+#include <sstream>
+#include "prim.h"
+#include "a_star.h"
+#include "bfs.h"
+#include <iomanip>
 
-UserInput::UserInput(char** input) {
-  if (!input[1] && !input[2]) {
-    std::cout << '\n'
-              << "Usage: [algorithm, movie title1, movie title 2]" << std::endl;
-  } else {
-    algorithm = input[1];
-    title1 = input[2];
-    title2 = (input[3]) ? (input[3]) : ("");
-  }
-}
-
-string UserInput::getTitle1() { return title1; }
-string UserInput::getTitle2() { return title2; }
-
-
-/*   DataProcessor d("../data/movies.dat", "../lists/avg_adj_list_.txt");
-
-  std::cout << "\ninitialize bfs" << std::endl;
+void UserInput::runBFS(DataProcessor& d, std::string start, std::string end, std::string output_filename) {
+  output_filename = "../out/" + output_filename;
+  std::cout << "\nInitialize bfs" << std::endl;
   BFS bfs(d);
   
   std::cout << "Perform bfs" << std::endl;
-  bfs.breadthFirst("The Avengers", "The Lion King");
+  bfs.breadthFirst(start, end);
 
   std::cout << "\nBFS of size: " << bfs.traversal().size() << std::endl;
   std::ofstream os;
-  os.open("../out/BFS_out.txt", std::ofstream::out | std::ofstream::trunc);
+  os.open(output_filename, std::ofstream::out | std::ofstream::trunc);
+  // os.open("../out/BFS_out.txt", std::ofstream::out | std::ofstream::trunc);
 
   for (std::string e : bfs.traversal()) {
     os << e << '\n';
   }
- */
+  std::cout << "BFS written to file at " << output_filename << std::endl;
+}
+void UserInput::runBFS(DataProcessor& d, std::string start, std::string end) {
+  runBFS(d, start, end, "BFS_out.txt");
+}
+
+void UserInput::runA_star(DataProcessor& d, std::string start, std::string end, std::string output_filename) {
+  output_filename = "../out/" + output_filename;
+  
+  std::cout << "\nRunning A_star" << std::endl;
+  auto out = A_Star::shortestPath(start, end, d);
+
+  int table_width = 50;
+  std::cout << "Movie Title" << std::setw(table_width - 11) << "\"Distance\"" << std::endl;
+
+  for (auto p : out) {
+    if (p.first.size() > 40) {
+      p.first = p.first.substr(0, 40) + "...";
+    }
+    std::cout << p.first << std::setw(table_width - p.first.size()) << p.second << std::endl;
+  }
+
+  std::ofstream os;
+  os.open(output_filename, std::ofstream::out | std::ofstream::trunc);
+  os << "Movie Title" << std::setw(table_width - 11) << "\"Distance\"" << "\n";
+  for (auto p : out) {
+    if (p.first.size() > 40) {
+      p.first = p.first.substr(0, 40) + "...";
+    }
+    os << p.first << std::setw(table_width - p.first.size()) << p.second << "\n";
+  }
+  std::cout << "A_star written to file at " << output_filename << std::endl;
+}
+
+void UserInput::runA_star(DataProcessor& d, std::string start, std::string end) {
+  runA_star(d, start, end, "A_star_out.txt");
+}

@@ -1,19 +1,14 @@
 #include <iostream>
+#include <ostream>
 
-#include "a_star.h"
 #include "data_processing.h"
-#include "prim.h"
 #pragma once
 using namespace std;
 class UserInput {
- private:
-  string title1;
-  string title2;
-  string algorithm;
+  public:
+  static void runBFS(DataProcessor& d, std::string start, std::string end, std::string output_filename);
+  static void runBFS(DataProcessor& d, std::string start, std::string end);
 
- public:
-  UserInput() = default;
-  UserInput(char** input);
-  string getTitle1();
-  string getTitle2();
+  static void runA_star(DataProcessor& d, std::string start, std::string end, std::string output_filename);
+  static void runA_star(DataProcessor& d, std::string start, std::string end);
 };
