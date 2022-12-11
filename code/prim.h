@@ -17,7 +17,7 @@ class Prim {
 
  public:
   // default constructor
-  Prim() = default;
+  // Prim() = default;
   /**
    *Constructor
    *@param string start
