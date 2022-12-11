@@ -2,6 +2,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#pragma once
 
 using namespace std;
 class DataProcessor {
@@ -27,8 +28,6 @@ class DataProcessor {
   // builds an adjacency list from the specified file
   void fileToListDouble(string filename, map<int, map<int, double>>& list);
 
-
-
   // returns a vector containing the ids of the neighbors of target
   map<int, double> getNeighbors(int target);
 
@@ -38,7 +37,6 @@ class DataProcessor {
   // returns a movie title given an adjacency list ID
   string IDToTitle(int id);
 
-  
   void populateAvgAdj();
 
   // attempt to preprocess weights. i realised after running that it was
