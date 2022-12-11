@@ -16,13 +16,13 @@ You should provide full instructions on how to build and run your executable, in
 First, download the avg_adj_list, and place it in the lists directory. Enter to the terminal, "mkdir build", "cd build", then "cmake .." to create the build folder.
 Then, type make to compile all of the code.
 
-Type the following commands depending on the algorithm that is desired. Proper capitalization and punctuation is required. The output will be printed to the terminal.
+Type the following commands depending on the algorithm that is desired. Proper capitalization and punctuation is required. The output will be printed to the terminal or written to a file in the out folder, with a default file if the user does not provide a file name.
 
-**A\***: ./main "A_star" {starting film} {destination film}
+**A\***: ./main "A_star" {starting film} {destination film} {optional file name for output}
 
-**Breadth-First Search**: ./main "BFS" {starting film} {destination film} {filepath for output}
+**Breadth-First Search**: ./main "BFS" {starting film} {destination film} {optional file name for output}
 
-**Prim**: ./main "Prim" {starting film}
+**Prim**: ./main "Prim" {starting film} {optional file name for output}
 
 Type ./test to run the tests
 
