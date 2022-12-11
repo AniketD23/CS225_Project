@@ -1,9 +1,7 @@
 #include "bfs.h"
 #include <iostream>
 
-BFS::BFS(DataProcessor& data) {
-  dp = data;
-}
+BFS::BFS(DataProcessor& data) { dp = data; }
 
 void BFS::breadthFirst(std::string film1, std::string film2) {
   BFT.clear();
@@ -36,10 +34,6 @@ void BFS::breadthFirst(int node1, int node2) {
       }
     }
   }
-  
-  
 }
 
-std::vector<std::string> BFS::traversal() {
-  return BFT;
-}
+std::vector<std::string> BFS::traversal() { return BFT; }

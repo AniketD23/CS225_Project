@@ -24,23 +24,6 @@ int main(int argc, char** argv) {
     std::cout << e << std::endl;
   }
 
-  // std::cout << "perform bfs 2" << std::endl;
-  // bfs.breadthFirst("6", "0");
-
-  // std::cout << "\nBFS of size: " << bfs.traversal().size() << std::endl;
-
-  // for (std::string e : bfs.traversal()) {
-  //   std::cout << e << std::endl;
-  // }
-
-  // std::cout << "perform bfs 3" << std::endl;
-  // bfs.breadthFirst("5", "6");
-
-  // std::cout << "\nBFS of size: " << bfs.traversal().size() << std::endl;
-
-  // for (std::string e : bfs.traversal()) {
-  //   std::cout << e << std::endl;
-  // }
 
   // UserInput ui(argv);
   // std::cout << ui.getTitle1() << std::endl;

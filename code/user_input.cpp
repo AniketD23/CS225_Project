@@ -1,7 +1,7 @@
 #include "user_input.h"
 
 UserInput::UserInput(char** input) {
-  if (!input) {
+  if (!input[1] && !input[2]) {
     std::cout << '\n'
               << "Usage: [algorithm, movie title1, movie title 2]" << std::endl;
   } else {
