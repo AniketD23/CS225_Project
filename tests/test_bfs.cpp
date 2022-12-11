@@ -88,11 +88,6 @@ TEST_CASE("partial BFS", "[bfs]") {
   bfs.breadthFirst("0", "4");
   std::vector<std::string> out = bfs.traversal();
   
-  std::cout << "first bfs:" << std::endl;
-  for (std::string e : out) {
-    std::cout << e << std::endl;
-  }
-
   std::unordered_set<std::string> dist_1 = {"1", "2"};
   std::unordered_set<std::string> dist_2 = {"3", "4", "5"};
   std::unordered_set<std::string> dist_3;
@@ -109,11 +104,6 @@ TEST_CASE("partial BFS", "[bfs]") {
 
   bfs.breadthFirst("6", "5");
   out = bfs.traversal();
-
-  std::cout << "second bfs:" << std::endl;
-  for (std::string e : out) {
-    std::cout << e << std::endl;
-  }
 
   dist_1 = {"4"};
   dist_2 = {"2", "3"};
@@ -132,11 +122,6 @@ TEST_CASE("partial BFS", "[bfs]") {
 
   bfs.breadthFirst("5", "2");
   out = bfs.traversal();
-
-  std::cout << "third bfs:" << std::endl;
-  for (std::string e : out) {
-    std::cout << e << std::endl;
-  }
 
   dist_1 = {"1", "3"};
   dist_2 = {"0", "2", "4"};
