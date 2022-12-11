@@ -16,3 +16,10 @@ class A_Star {
                                   std::map<int, int>& came_from,
                                   DataProcessor& data);
 };
+
+class CompClass {
+  public:
+  bool operator() (pair<double, int> a, pair<double, int> b) {
+    return a.first > b.first;
+  }
+};

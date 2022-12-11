@@ -15,7 +15,7 @@ vector<string> A_Star::shortestPath(std::string start, std::string end,
   // internet suggests that priority queue by default sorts pairs based on the
   // first.
   priority_queue<std::pair<double, int>, vector<std::pair<double, int>>,
-                 greater<double>>
+                 CompClass>
       open_queue;
 
   // open_set keeps track of which ids need to be checked. this circumvents
