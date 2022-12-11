@@ -1,5 +1,6 @@
 #include "a_star.h"
 #include <iostream>
+#include <unordered_set>
 
 vector<string> A_Star::shortestPath(std::string start, std::string end,
                                     DataProcessor& data) {
@@ -7,10 +8,10 @@ vector<string> A_Star::shortestPath(std::string start, std::string end,
   int end_id = data.titleToID(end);
 
   // came_from[id] gives the id from which this id was accessed.
-  std::map<int, int> came_from;
+  std::unordered_map<int, int> came_from;
 
   // g_score[id] gives the cheapest known way to get to id from start
-  std::map<int, double> g_score;
+  std::unordered_map<int, double> g_score;
   g_score[start_id] = 0;
 
   // first is distance + heuristic, second is id
@@ -22,7 +23,7 @@ vector<string> A_Star::shortestPath(std::string start, std::string end,
 
   // open_set keeps track of which ids need to be checked. this circumvents
   // updating the priority queue
-  std::set<int> open_set;
+  std::unordered_set<int> open_set;
 
   open_queue.push(std::make_pair(
       g_score[start_id] + heuristic(start_id, end_id, data), start_id));
@@ -46,7 +47,7 @@ vector<string> A_Star::shortestPath(std::string start, std::string end,
 
     open_queue.pop();
     open_set.erase(set_it);
-    std::map<int, double> neighbors = data.getNeighbors(curr_id);
+    std::unordered_map<int, double> neighbors = data.getNeighbors(curr_id);
 
     for (auto& n : neighbors) {
       int n_id = n.first;
@@ -76,7 +77,7 @@ int A_Star::heuristic(int start_id, int end_id, DataProcessor& data) {
 }
 
 vector<string> A_Star::backtrack(int start, int end,
-                                 std::map<int, int>& came_from,
+                                 std::unordered_map<int, int>& came_from,
                                  DataProcessor& data) {
   std::vector<std::string> out;
   int curr = end;
