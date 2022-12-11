@@ -1,12 +1,8 @@
 #include "bfs.h"
 
-BFS::BFS(DataProcessor& data) {
-  dp = data;
-}
+BFS::BFS(DataProcessor& data) { dp = data; }
 
-void BFS::breadthFirst(std::string film) {
-  breadthFirst(dp.titleToID(film));
-}
+void BFS::breadthFirst(std::string film) { breadthFirst(dp.titleToID(film)); }
 
 void BFS::breadthFirst(int node) {
   std::map<int, std::map<int, double>>& adjacency = dp.avg_adj_list_;
@@ -30,10 +26,6 @@ void BFS::breadthFirst(int node) {
       }
     }
   }
-  
-  
 }
 
-std::vector<std::string> BFS::traversal() {
-  return BFT;
-}
+std::vector<std::string> BFS::traversal() { return BFT; }
