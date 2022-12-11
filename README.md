@@ -20,7 +20,7 @@ Type the following commands depending on the algorithm that is desired. Proper c
 
 **A\***: ./main "A_star" {starting film} {destination film}
 
-**Breadth-First Search**: ./main "BFS" {starting film} {destination film}
+**Breadth-First Search**: ./main "BFS" {starting film} {destination film} {filepath for output}
 
 **Prim**: ./main "Prim" {starting film}
 
