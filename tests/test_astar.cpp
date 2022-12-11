@@ -18,16 +18,16 @@ void verify_path(std::vector<std::pair<std::string, double>> a, std::vector<std:
 TEST_CASE("a_star basic", "[a_star]") {
     DataProcessor data;
     create_edge(0, 2, .9, data);
-    create_edge(2, 4, .9, data);
+    create_edge(2, 4, 1.2, data);
     create_edge(4, 6, .9, data);
-    create_edge(6, 8, .9, data);
+    create_edge(6, 8, .8, data);
     create_edge(8, 10, .9, data);
 
 
     create_edge(0, 1, .1, data);
     create_edge(1, 3, 1.0, data);
-    create_edge(3, 5, 1.0, data);
-    create_edge(5, 7, 1.0, data);
+    create_edge(3, 5, 1.2, data);
+    create_edge(5, 7, .8, data);
     create_edge(7, 10, 1.0, data);
 
     std::vector<std::pair<std::string, double>> out = A_Star::shortestPath("0", "10", data);
@@ -70,9 +70,15 @@ TEST_CASE("a_star cant find", "[a_star]") {
     create_edge(1, 4, 6.0, data);
     create_edge(2, 4, 4.5, data);
 
+    create_edge(5, 7, 1.3, data);
+    create_edge(4, 8, 1.3, data);
+    create_edge(7, 10, 1.3, data);
+
     std::vector<std::pair<std::string, double>> out = A_Star::shortestPath("0", "5", data);
-    std::vector<std::string> ans = {};
-    verify_path(out, ans);
+    REQUIRE (out.empty());
+    out = A_Star::shortestPath("10", "5", data);
+    REQUIRE (!out.empty());
+
 }
 
 TEST_CASE("a_star edge cases", "[a_star]") {
