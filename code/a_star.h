@@ -11,12 +11,12 @@
 using namespace std;
 class A_Star {
   public:
-  static vector<string> shortestPath(string start, string end,
+  static vector<pair<string, double>> shortestPath(string start, string end,
                                      DataProcessor& data);
   static int heuristic(int start_id, int end_id, DataProcessor& data);
-  static vector<string> backtrack(int start, int end,
+  static vector<pair<string, double>> backtrack(int start, int end,
                                   std::unordered_map<int, int>& came_from,
-                                  DataProcessor& data);
+                                  DataProcessor& data, std::unordered_map<int, double>& g_score);
 };
 
 class CompClass {

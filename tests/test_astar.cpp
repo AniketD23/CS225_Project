@@ -7,11 +7,11 @@ void create_edge(int a, int b, double weight, DataProcessor& data) {
     data.avg_adj_list_[b][a] = weight;
 }
 
-void verify_path(std::vector<std::string> a, std::vector<std::string> b) {
+void verify_path(std::vector<std::pair<std::string, double>> a, std::vector<std::string> b) {
     REQUIRE (a.size() == b.size());
 
     for (size_t i = 0; i < a.size(); i++) {
-        REQUIRE(a[i] == b[i]);
+        REQUIRE(a[i].first == b[i]);
     }
 }
 
@@ -30,11 +30,7 @@ TEST_CASE("a_star basic", "[a_star]") {
     create_edge(5, 7, 1.0, data);
     create_edge(7, 10, 1.0, data);
 
-    std::vector<std::string> out = A_Star::shortestPath("0", "10", data);
-    for (auto a : out) {
-        std::cout << a;
-    }
-    std::cout << "\n";
+    std::vector<std::pair<std::string, double>> out = A_Star::shortestPath("0", "10", data);
     std::vector<std::string> ans = {"0", "1", "3", "5", "7", "10"};
 
     verify_path(out, ans);
@@ -58,11 +54,7 @@ TEST_CASE("a_star heuristic affects choice", "[a_star]") {
 
     
 
-    std::vector<std::string> out = A_Star::shortestPath("0", "4", data);
-    for (auto a : out) {
-        std::cout << a;
-    }
-    std::cout << "\n";
+    std::vector<std::pair<std::string, double>> out = A_Star::shortestPath("0", "4", data);
     std::vector<std::string> ans = {"0", "1", "2", "3", "4"};
 
     verify_path(out, ans);
@@ -78,14 +70,14 @@ TEST_CASE("a_star cant find", "[a_star]") {
     create_edge(1, 4, 6.0, data);
     create_edge(2, 4, 4.5, data);
 
-    std::vector<std::string> out = A_Star::shortestPath("0", "5", data);
+    std::vector<std::pair<std::string, double>> out = A_Star::shortestPath("0", "5", data);
     std::vector<std::string> ans = {};
     verify_path(out, ans);
 }
 
 TEST_CASE("a_star edge cases", "[a_star]") {
     DataProcessor data;
-    std::vector<std::string> out = A_Star::shortestPath("0", "0", data);
+    std::vector<std::pair<std::string, double>> out = A_Star::shortestPath("0", "0", data);
     std::vector<std::string> ans = {"0"};
     verify_path(out, ans);
 
@@ -110,7 +102,7 @@ TEST_CASE("a_star bad heuristic", "[edge_case]") {
     create_edge(0, 4, 5.0, data);
     create_edge(3, 4, 5.0, data);
 
-    std::vector<std::string> out = A_Star::shortestPath("0", "3", data);
+    std::vector<std::pair<std::string, double>> out = A_Star::shortestPath("0", "3", data);
     std::vector<std::string> ans = {"0", "4", "3"};
     verify_path(out, ans);
 }
@@ -138,7 +130,7 @@ TEST_CASE("a_star test 1", "[a_star]") {
     create_edge(5, 7, 5.5, data);
     create_edge(6, 7, 1.9, data);
 
-    std::vector<std::string> out = A_Star::shortestPath("0", "7", data);
+    std::vector<std::pair<std::string, double>> out = A_Star::shortestPath("0", "7", data);
     std::vector<std::string> ans = {"0", "2", "4", "7"};
     verify_path(out, ans);
 
@@ -147,7 +139,8 @@ TEST_CASE("a_star test 1", "[a_star]") {
     verify_path(out, ans);
 }
 
-// TEST_CASE("a_star big test", "[a_star]") {
+// does the algorithm run on the full dataset in reasonable time?
+// TEST_CASE("a_star time complexity test", "[a_star]") {
 //     DataProcessor data("../data/movies.dat", "../lists/avg_adj_list_.txt");
     
 //     std::vector<std::string> out = A_Star::shortestPath("Ice Age: Collision Course (2016)", "What We Do in the Shadows (2014)", data);
