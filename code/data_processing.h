@@ -23,7 +23,7 @@ class DataProcessor {
   void fileToList(string filename, map<int, map<int, int>>& list);
 
   // writes an adjacency list to the specified file
-  void listToFile(string filename, map<int, map<int, double>> list);
+  void listToFile(string filename, map<int, map<int, double>>& list);
 
   // builds an adjacency list from the specified file
   void fileToListDouble(string filename, map<int, map<int, double>>& list);
@@ -39,12 +39,6 @@ class DataProcessor {
 
   void populateAvgAdj();
 
-  // attempt to preprocess weights. i realised after running that it was
-  // probably slower to save and load the preprocessed data than to just do it
-  // every time. If you want to save preprocessed data in some way, find a
-  // sparse way to save the adj matrix. vector<vector<int>>
-  // reviewsToWeight(vector<string> reviews); void preprocessData(string
-  // reviews_name, string target_file);
 
   // adj_list[target][dest] is the average difference in reviews between target
   // and dest

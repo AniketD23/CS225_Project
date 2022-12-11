@@ -9,6 +9,7 @@
 
 using namespace std;
 class A_Star {
+  public:
   static vector<string> shortestPath(string start, string end,
                                      DataProcessor& data);
   static int heuristic(int start_id, int end_id, DataProcessor& data);

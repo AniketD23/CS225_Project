@@ -46,7 +46,7 @@ map<int, double> DataProcessor::getNeighbors(int target) {
 }
 
 void DataProcessor::loadReviewsToAdjList(string movies_id_name, string reviews_name) {
-
+  testing_ = false;
   ifstream movie_id_file(movies_id_name);
   string line;
   int new_id = 0;
@@ -201,7 +201,7 @@ void DataProcessor::listToFile(string filename, map<int, map<int, int>> list) {
 }
 
 // double weight for avg_adj_list_
-void DataProcessor::listToFile(string filename, map<int, map<int, double>> list) {
+void DataProcessor::listToFile(string filename, map<int, map<int, double>>& list) {
   ofstream os(filename);
   int node_num = 0;
   cout << "Nodes written: " << endl;

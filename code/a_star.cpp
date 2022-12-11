@@ -1,4 +1,6 @@
 #include "a_star.h"
+#include <iostream>
+
 vector<string> A_Star::shortestPath(std::string start, std::string end,
                                     DataProcessor& data) {
   int start_id = data.titleToID(start);
@@ -24,16 +26,19 @@ vector<string> A_Star::shortestPath(std::string start, std::string end,
 
   open_queue.push(std::make_pair(
       g_score[start_id] + heuristic(start_id, end_id, data), start_id));
-
-  while (!open_set.empty()) {
+  open_set.insert(start_id);
+  while (!open_queue.empty()) {
     // check if the current item is on the list to be checked
     auto set_it = open_set.find(open_queue.top().second);
-    while (set_it != open_set.end()) {
+    while (set_it == open_set.end()) {
       open_queue.pop();
+      if (open_queue.empty()) {
+        return std::vector<string>();
+      }
       set_it = open_set.find(open_queue.top().second);
     }
     int curr_id = open_queue.top().second;
-
+    // std::cout << curr_id << ", " << g_score[curr_id] << std::endl;
     // reached our goal
     if (curr_id == end_id) {
       return backtrack(start_id, end_id, came_from, data);
@@ -45,15 +50,14 @@ vector<string> A_Star::shortestPath(std::string start, std::string end,
 
     for (auto& n : neighbors) {
       int n_id = n.first;
-      double tentative_g_score =
-          g_score[curr_id] + data.avg_adj_list_[curr_id][n_id];
+      double tentative_g_score = g_score[curr_id] + data.avg_adj_list_[curr_id][n_id];
       auto it = g_score.find(n_id);
       if (it == g_score.end() || tentative_g_score < it->second) {
+        // std::cout << "A:" << n_id << ", " << tentative_g_score << std::endl;
         g_score[n_id] = tentative_g_score;
         came_from[n_id] = curr_id;
         open_set.insert(n_id);
-        open_queue.push(std::make_pair(
-            tentative_g_score + heuristic(n_id, end_id, data), n_id));
+        open_queue.push(std::make_pair(tentative_g_score + heuristic(n_id, end_id, data), n_id));
       }
     }
   }
@@ -61,6 +65,7 @@ vector<string> A_Star::shortestPath(std::string start, std::string end,
 }
 
 int A_Star::heuristic(int start_id, int end_id, DataProcessor& data) {
+  // return 0;
   if (start_id == end_id) {
     return 0;
   }
