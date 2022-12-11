@@ -1,6 +1,7 @@
 
 #include <cfloat>
 #include <climits>
+#include <queue>
 
 #include "data_processing.h"
 #pragma once
@@ -21,8 +22,9 @@ class Prim {
   // id of starting movie
   int start_id_;
   // Vector to store order of nodes in Mst
-  vector<int> parent_;
+  queue<int> parent_;
   // stores the value and weight of each node
+  vector<int> list_;
 
  public:
   // default constructor
@@ -44,5 +46,5 @@ class Prim {
    * execute algorithm
    * @return map<int, bool> of mst
    */
-  vector<int> MST();
+  queue<int> MST();
 };
