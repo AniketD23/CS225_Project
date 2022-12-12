@@ -1,7 +1,10 @@
 #include "prim.h"
 
-std::unordered_map<int, std::unordered_map<int, bool>> Prim::findMST(DataProcessor& d, std::string start) {
-  std::priority_queue<std::pair<int, double>, vector<std::pair<int, double>>, PrimCompClass> to_add;
+std::unordered_map<int, std::unordered_map<int, bool>> Prim::findMST(
+    DataProcessor& d, std::string start) {
+  std::priority_queue<std::pair<int, double>, vector<std::pair<int, double>>,
+                      PrimCompClass>
+      to_add;
   std::unordered_map<int, double> least_known;
   std::unordered_set<int> in_tree;
   std::unordered_set<int> to_check;
@@ -26,7 +29,8 @@ std::unordered_map<int, std::unordered_map<int, bool>> Prim::findMST(DataProcess
     mst[curr_id][parent[curr_id]] = true;
     mst[parent[curr_id]][curr_id] = true;
     for (auto p : d.getNeighbors(curr_id)) {
-      if ((in_tree.count(p.first) == 0) && (least_known.count(p.first) == 0 || p.second < least_known[p.first])) {
+      if ((in_tree.count(p.first) == 0) && (least_known.count(p.first) == 0 ||
+                                            p.second < least_known[p.first])) {
         least_known[p.first] = p.second;
         to_add.push(p);
         to_check.insert(p.first);

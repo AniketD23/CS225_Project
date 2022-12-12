@@ -1,9 +1,10 @@
 
 #include <cfloat>
 #include <climits>
-#include <unordered_map>
 #include <queue>
+#include <unordered_map>
 #include <unordered_set>
+
 #include "data_processing.h"
 #pragma once
 /**
@@ -12,13 +13,14 @@
  * saving a larger number of movies to a file, formatted as a tree.
  */
 class Prim {
-  public:
-  static std::unordered_map<int, std::unordered_map<int, bool>> findMST(DataProcessor& d, std::string start);
+ public:
+  static std::unordered_map<int, std::unordered_map<int, bool>> findMST(
+      DataProcessor& d, std::string start);
 };
 
 class PrimCompClass {
-  public:
-  bool operator() (pair<int, double> a, pair<int, double> b) {
+ public:
+  bool operator()(pair<int, double> a, pair<int, double> b) {
     if (a.second == b.second) {
       return a.first > b.first;
     }
