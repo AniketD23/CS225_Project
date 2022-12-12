@@ -16,7 +16,8 @@ TEST_CASE("full BFS", "[bfs]") {
   for (std::string e : out) {
     std::cout << e << std::endl;
   }
-
+  std::cout << "A" << std::endl;
+  
   std::unordered_set<std::string> dist_1 = {"1", "2"};
   std::unordered_set<std::string> dist_2 = {"3", "4", "5"};
   std::unordered_set<std::string> dist_3 = {"6"};

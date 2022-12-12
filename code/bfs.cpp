@@ -5,11 +5,6 @@
 BFS::BFS(DataProcessor& data) { dp = data; }
 
 void BFS::breadthFirst(std::string film1, std::string film2) {
-  if (dp.titleToID(film1) == 0 || dp.titleToID(film2) == 0) {
-      std::cout << "That is not a valid film title! Please make sure your capitalization and punctuation is correct.\n";
-      std::cout << "Note: Some films may not be included if they do not have enough common reviewers with any other films.\n";
-      return;
-  }
   BFT.clear();
   breadthFirst(dp.titleToID(film1), dp.titleToID(film2));
 }

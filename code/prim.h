@@ -13,9 +13,9 @@
  * saving a larger number of movies to a file, formatted as a tree.
  */
 class Prim {
- public:
-  static std::unordered_map<int, std::unordered_map<int, bool>> findMST(
-      DataProcessor& d, std::string start);
+  public:
+  static std::unordered_map<int, std::unordered_map<int, bool>> findMST(DataProcessor& d, std::string start);
+  static std::vector<std::string> BFTraversalOfMST(std::string root, int num_nodes, std::unordered_map<int, std::unordered_map<int, bool>>& mst, DataProcessor& data);
 };
 
 class PrimCompClass {

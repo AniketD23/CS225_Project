@@ -40,3 +40,27 @@ std::unordered_map<int, std::unordered_map<int, bool>> Prim::findMST(
   }
   return mst;
 }
+
+std::vector<std::string> BFTraversalOfMST(std::string root, int num_nodes, std::unordered_map<int, std::unordered_map<int, bool>>& mst, DataProcessor& data) {
+  int root_id = data.titleToID(root);
+  std::queue<int> to_add;
+  to_add.push(root_id);
+  std::unordered_set<int> visited;
+
+  std::vector<std::string> out;
+  while (!to_add.empty() && (num_nodes > 0 || num_nodes <= -1)) {
+    int curr_id = to_add.front();
+    out.push_back(data.IDToTitle(curr_id));
+    num_nodes--;
+    to_add.pop();
+    visited.insert(curr_id);
+
+    for (auto p : mst[to_add.front()]) {
+      if (p.second && visited.count(p.first) == 0) {
+        to_add.push(p.first);
+      }
+    }
+  }
+  return out;
+}
+
