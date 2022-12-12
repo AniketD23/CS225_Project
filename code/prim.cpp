@@ -1,47 +1,38 @@
 #include "prim.h"
 
-Prim::Prim(string start, DataProcessor& data) : dp_(data) {
-  start_ = start;
-  // convert title
-  int id = dp_.titleToID(start);
-  start_id_ = id;
-  // make starting element the root
-  mst_.emplace(id, true);
-  for (auto it : dp_.avg_adj_list_[start_id_]) {
-    mst_.emplace(it.first, false);
-  }
-  parent_.push(start_id_);
-}
+std::unordered_map<int, std::unordered_map<int, bool>> Prim::findMST(DataProcessor& d, std::string start) {
+  std::priority_queue<std::pair<int, double>, vector<std::pair<int, double>>, PrimCompClass> to_add;
+  std::unordered_map<int, double> least_known;
+  std::unordered_set<int> in_tree;
+  std::unordered_set<int> to_check;
+  std::unordered_map<int, int> parent;
+  std::unordered_map<int, std::unordered_map<int, bool>> mst;
 
-int Prim::nextMin() {
-  double min = DBL_MAX;
-  int min_index = 0;
-  for (auto it : mst_) {
-    unordered_map<int, double> adj_nodes = dp_.getNeighbors(it.first);
-    if (mst_[it.first] == false &&
-        dp_.avg_adj_list_[it.first][parent_.front()] < min) {
-      min = adj_nodes[parent_.front()];
-      min_index = it.first;
+  int start_id = d.titleToID(start);
+  to_add.push(std::make_pair(start_id, 0.0));
+  to_check.insert(start_id);
+
+  while (!to_add.empty()) {
+    while (to_check.count(to_add.top().first) == 0) {
+      to_add.pop();
+      if (to_add.empty()) {
+        return mst;
+      }
     }
-  }
-  return min_index;
-}
-
-queue<int> Prim::MST() {
-  for (size_t i = 0; i < mst_.size() - 1; i++) {
-    int min = nextMin();
-    mst_[min] = true;
-    list_.push_back(min);
-    unordered_map<int, double> neighbors = dp_.getNeighbors(min);
-    for (auto neighbor : neighbors) {
-      if (mst_.find(neighbor.first) != mst_.end()) {
-        if (mst_[neighbor.first] == false &&
-            neighbor.second <
-                dp_.avg_adj_list_[parent_.front()][neighbor.first]) {
-          parent_.push(neighbor.first);
-        }
+    int curr_id = to_add.top().first;
+    to_add.pop();
+    to_check.erase(curr_id);
+    in_tree.insert(curr_id);
+    mst[curr_id][parent[curr_id]] = true;
+    mst[parent[curr_id]][curr_id] = true;
+    for (auto p : d.getNeighbors(curr_id)) {
+      if ((in_tree.count(p.first) == 0) && (least_known.count(p.first) == 0 || p.second < least_known[p.first])) {
+        least_known[p.first] = p.second;
+        to_add.push(p);
+        to_check.insert(p.first);
+        parent[p.first] = curr_id;
       }
     }
   }
-  return parent_;
+  return mst;
 }

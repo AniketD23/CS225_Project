@@ -1,8 +1,9 @@
 
 #include <cfloat>
 #include <climits>
+#include <unordered_map>
 #include <queue>
-
+#include <unordered_set>
 #include "data_processing.h"
 #pragma once
 /**
@@ -11,40 +12,16 @@
  * saving a larger number of movies to a file, formatted as a tree.
  */
 class Prim {
- private:
-  // representation of MST, boolean means
-  // vertex is included in MST
-  unordered_map<int, bool> mst_;
-  // instance of data processor
-  DataProcessor& dp_;
-  // starting movie
-  string start_;
-  // id of starting movie
-  int start_id_;
-  // Vector to store order of nodes in Mst
-  queue<int> parent_;
-  // stores the value and weight of each node
-  vector<int> list_;
+  public:
+  static std::unordered_map<int, std::unordered_map<int, bool>> findMST(DataProcessor& d, std::string start);
+};
 
- public:
-  // default constructor
-  // Prim() = default;
-  /**
-   *Constructor
-   *@param string start
-   *@param DataProcessor data
-   */
-  Prim(string start, DataProcessor& data);
-
-  /**
-   * find vertex with next most minimum weight
-   * @param current current vertex
-   */
-  int nextMin();
-
-  /**
-   * execute algorithm
-   * @return map<int, bool> of mst
-   */
-  queue<int> MST();
+class PrimCompClass {
+  public:
+  bool operator() (pair<int, double> a, pair<int, double> b) {
+    if (a.second == b.second) {
+      return a.first > b.first;
+    }
+    return a.second > b.second;
+  }
 };
