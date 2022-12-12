@@ -29,7 +29,6 @@ int main(int argc, char** argv) {
       std::cout << "Too few arguments for BFS. Remember, BFS takes two movie arguments" << std::endl;
       return 0;
     }
-    std::cout << "AFDFSDFSD" << std::endl;
     DataProcessor d("../data/movies.dat", "../lists/avg_adj_list_.txt");
     if (argc < 5) {
       UserInput::runBFS(d, argv[2], argv[3]);
