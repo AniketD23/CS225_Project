@@ -73,5 +73,5 @@ void UserInput::runPrim(DataProcessor& d, std::string start, std::string output_
 }
 
 void UserInput::runPrim(DataProcessor& d, std::string start) {
-  runPrim(d, start, end, "Prim_out.txt");
+  runPrim(d, start, "Prim_out.txt");
 }
