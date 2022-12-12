@@ -223,6 +223,7 @@ void DataProcessor::fileToListDouble(string filename, unordered_map<int, unorder
       }
     }
   }
+  cout << endl;
 }
 
 void DataProcessor::populateAvgAdj() {

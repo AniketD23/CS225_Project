@@ -51,7 +51,11 @@ int main(int argc, char** argv) {
       std::cout << "One of the movies passed is not in the dataset. Remember to be strict with capitalization." << std::endl;
       return 0;
     }
-    
+    if (argc < 4) {
+      UserInput::runPrim(d, argv[2]);
+    } else {
+      UserInput::runPrim(d, argv[2], argv[3]);
+    }
   } else {
     std::cout << "Unknown algorithm. Remember, the first argument should be either \"A_star\", \"BFS\", or \"Prim\"." << std::endl;
     return 0;

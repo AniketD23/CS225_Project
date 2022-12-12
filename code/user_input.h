@@ -11,4 +11,7 @@ class UserInput {
 
   static void runA_star(DataProcessor& d, std::string start, std::string end, std::string output_filename);
   static void runA_star(DataProcessor& d, std::string start, std::string end);
+
+  static void runPrim(DataProcessor& d, std::string start, std::string output_filename);
+  static void runPrim(DataProcessor& d, std::string start);
 };
