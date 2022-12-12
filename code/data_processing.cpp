@@ -36,6 +36,7 @@ bool DataProcessor::loadIdListFromFile(string id_list_filename) {
   }
   return true;
 }
+
 DataProcessor::DataProcessor(string id_list_filename, string adj_list_filename) {
   testing_ = id_list_filename == "test";
 
@@ -125,11 +126,6 @@ void DataProcessor::reviewsToList(vector<string> reviews) {
   }
 }
 
-// returns a vector containing the ids of the neighbors of target
-// vector<pair<int, int>> DataProcessor::getNeighbors(int target) {
-  
-// }
-
 // returns the index in the adjacency list of the movie title
 int DataProcessor::titleToID(string title) {
   if (testing_) {
@@ -140,10 +136,10 @@ int DataProcessor::titleToID(string title) {
   for (auto& it : movie_id_dict_) {
     if (it.second.first == title) {
       id = it.second.second;
-      break;
+      return id;
     }
   }
-  return id;
+  return -1;
 }
 
 // returns a movie title given an adjacency list ID
