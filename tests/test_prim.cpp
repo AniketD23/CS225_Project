@@ -117,4 +117,9 @@ TEST_CASE("Test with avg_adj_list.txt", "[prim4]") {
   for (string movie : result) {
     std::cout << movie << std::endl;
   }
+  REQUIRE(result.size() == 4);
+  REQUIRE(result[0] == "The Room");
+  REQUIRE(data.titleToID(result[1]) != -1);
+  REQUIRE(data.titleToID(result[2]) != -1);
+  REQUIRE(data.titleToID(result[3]) != -1);
 }
