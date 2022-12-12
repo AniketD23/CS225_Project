@@ -41,7 +41,10 @@ std::unordered_map<int, std::unordered_map<int, bool>> Prim::findMST(
   return mst;
 }
 
-std::vector<std::string> BFTraversalOfMST(std::string root, int num_nodes, std::unordered_map<int, std::unordered_map<int, bool>>& mst, DataProcessor& data) {
+std::vector<std::string> Prim::BFTraversalOfMST(
+    std::string root, int num_nodes,
+    std::unordered_map<int, std::unordered_map<int, bool>>& mst,
+    DataProcessor& data) {
   int root_id = data.titleToID(root);
   std::queue<int> to_add;
   to_add.push(root_id);
@@ -55,7 +58,7 @@ std::vector<std::string> BFTraversalOfMST(std::string root, int num_nodes, std::
     to_add.pop();
     visited.insert(curr_id);
 
-    for (auto p : mst[to_add.front()]) {
+    for (auto p : mst[curr_id]) {
       if (p.second && visited.count(p.first) == 0) {
         to_add.push(p.first);
       }
@@ -63,4 +66,3 @@ std::vector<std::string> BFTraversalOfMST(std::string root, int num_nodes, std::
   }
   return out;
 }
-

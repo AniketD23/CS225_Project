@@ -12,6 +12,7 @@ void create_edge3(int a, int b,
   arr[a][b] = true;
   arr[b][a] = true;
 }
+
 void check_tree(std::unordered_map<int, std::unordered_map<int, bool>> out,
                 std::unordered_map<int, std::unordered_map<int, bool>> ans) {
   for (auto p : out) {
@@ -69,4 +70,51 @@ TEST_CASE("prim test tree basic", "[primtree1]") {
   //   }
   // }
   check_tree(out, ans);
+}
+TEST_CASE("Test 2 unconnected components", "[prim2]") {
+  DataProcessor data;
+  create_edge2(1, 2, 1, data);
+  create_edge2(2, 3, 2, data);
+  std::unordered_map<int, std::unordered_map<int, bool>> ans;
+  create_edge3(1, 2, ans);
+  create_edge3(2, 3, ans);
+  std::unordered_map<int, std::unordered_map<int, bool>> out =
+      Prim::findMST(data, "2");
+  check_tree(out, ans);
+}
+TEST_CASE("Test 1 single node", "[prim2]") {
+  DataProcessor data;
+  create_edge2(1, 1, 1, data);
+  std::unordered_map<int, std::unordered_map<int, bool>> ans;
+  create_edge3(1, 1, ans);
+  std::unordered_map<int, std::unordered_map<int, bool>> out =
+      Prim::findMST(data, "1");
+  check_tree(out, ans);
+}
+
+TEST_CASE("Test chain of nodes", "[prim3]") {
+  DataProcessor data;
+  create_edge2(1, 2, 1, data);
+  create_edge2(2, 3, 2, data);
+  create_edge2(3, 4, 3, data);
+  std::unordered_map<int, std::unordered_map<int, bool>> ans;
+  create_edge3(1, 2, ans);
+  create_edge3(2, 3, ans);
+  create_edge3(3, 4, ans);
+
+  std::unordered_map<int, std::unordered_map<int, bool>> out =
+      Prim::findMST(data, "1");
+  check_tree(out, ans);
+}
+
+TEST_CASE("Test with avg_adj_list.txt", "[prim4]") {
+  DataProcessor data("../data/movies.dat", "../lists/avg_adj_list_.txt");
+  std::unordered_map<int, std::unordered_map<int, bool>> out =
+      Prim::findMST(data, "The Room");
+
+  std::vector<std::string> result =
+      Prim::BFTraversalOfMST("The Room", 4, out, data);
+  for (string movie : result) {
+    std::cout << movie << std::endl;
+  }
 }
