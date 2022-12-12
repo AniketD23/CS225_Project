@@ -9,6 +9,9 @@ All of our tests are in the tests folder, with a sanity check for our data parsi
 
 The dataset we used is in the data folder. The files that we use to load in the adjacency list are in the lists folder. 
 
+There is also an out folder for the output of out algorithms. The program has default files it will write to, but the user can also specify a file name of their choice.
+
+results.md is in the main directory.
 
 ## Running Instructions
 You should provide full instructions on how to build and run your executable, including how to define the input data and output location for each method. You should also have instructions on how to build and run your test suite, including a general description on what tests you have created. It is in your best interest to make the instructions (and the running of your executables and tests) as simple and straightforward as possible.
