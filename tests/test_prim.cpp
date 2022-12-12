@@ -16,10 +16,7 @@ void create_edge3(int a, int b,
 void check_tree(std::unordered_map<int, std::unordered_map<int, bool>> out,
                 std::unordered_map<int, std::unordered_map<int, bool>> ans) {
   for (auto p : out) {
-    std::cout << p.first << std::endl;
     for (auto p2 : p.second) {
-      std::cout << p2.first << std::endl;
-      std::cout << p2.second << std::endl;
       if (out[p.first].find(p2.first) != out[p.first].end()) {
         out[p.first][p2.first] = false;
       }
