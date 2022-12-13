@@ -111,12 +111,21 @@ TEST_CASE("Test with avg_adj_list.txt", "[prim4]") {
 
   std::vector<std::string> result =
       Prim::BFTraversalOfMST("The Room", 4, out, data);
-  for (string movie : result) {
-    std::cout << movie << std::endl;
-  }
+
   REQUIRE(result.size() == 4);
   REQUIRE(result[0] == "The Room");
   REQUIRE(data.titleToID(result[1]) != -1);
   REQUIRE(data.titleToID(result[2]) != -1);
   REQUIRE(data.titleToID(result[3]) != -1);
+}
+TEST_CASE("Test for unique results", "[prim5]") {
+  DataProcessor data("../data/movies.dat", "../lists/avg_adj_list_.txt");
+  std::unordered_map<int, std::unordered_map<int, bool>> out =
+      Prim::findMST(data, "The Room");
+
+  std::vector<std::string> result =
+      Prim::BFTraversalOfMST("The Room", 4, out, data);
+  std::vector<std::string> result2 =
+      Prim::BFTraversalOfMST("Midsommar", 4, out, data);
+  REQUIRE(result != result2);
 }
