@@ -18,10 +18,10 @@ results.md is in the main directory.
 
 You should provide full instructions on how to build and run your executable, including how to define the input data and output location for each method. You should also have instructions on how to build and run your test suite, including a general description on what tests you have created. It is in your best interest to make the instructions (and the running of your executables and tests) as simple and straightforward as possible.
 
-First, download the avg_adj_list, and place it in the lists directory. Enter to the terminal, "mkdir build", "cd build", then "cmake .." to create the build folder.
+First, download the [avg_adj_list](https://drive.google.com/file/d/1q4-KmztM7peZLp7ArUfci3OI1mSA5wcE/view?usp=share_link), and place it in the lists directory. Enter  the terminal and run "mkdir build", "cd build", then "cmake .." to create the build folder.
 Then, type make to compile all of the code.
 
-Type the following commands depending on the algorithm that is desired. Proper capitalization and punctuation is required. The output will be printed to the terminal or written to a file in the out folder, with a default file if the user does not provide a file name.Running each algorithm can produce different results even when providing the same movie titles as arguments.
+Type the following commands from inside the build directory depending on the algorithm that is desired. Exact capitalization and punctuation is required. The output will be printed to the terminal or written to a file in the out folder, with a default file if the user does not provide a file name. Running each algorithm can produce different results even when providing the same movie titles as arguments.
 
 **A\***: `./main "A_star" {starting film} {destination film} {optional file name for output}`
 
@@ -29,7 +29,7 @@ Type the following commands depending on the algorithm that is desired. Proper c
 
 **Prim**: `./main "Prim" {starting film} {optional file name for output}`
 
-Type `./test ` to run the tests. To run a specific test, run ./test with the tag for the specific test as an argument. Ex. `./test [prim4]`
+Type `./test ` to run the tests. To run a specific test, run ./test with the tag for the specific test as an argument. Ex. `./test [prim4]`.
 
 **A\* testing:**
 
